@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 100%;
+}
+
+.auth-form {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.085);
+  margin-top: 50px;
+}
+
