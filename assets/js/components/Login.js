@@ -9,24 +9,26 @@ const Login = () => {
     const [error, setError] = useState("");
     const history = useHistory();
 
-    const handleSubmit = (e, data) => {
-        e.preventDefault();
-
-        axois.post("/api/auth/login", { data })
+    const handleSubmit = (data) => {
+        axois.post("/api/auth/login", { ...data })
             .then(res => {
                 setUser(res.data);
                 history.push("/channels")
             })
             .catch(error => {
                 console.log(error.response);
-                setError("An error occurred while trying to register your username.");
+                setError(error.response.data.message);
             });
     };
 
     return(
         <div className="auth">
             <AuthFrom from="login" handleSubmit={handleSubmit} />
-            I do not have an account <Link to="/">Register</Link>
+            {error &&
+                <div className="alert danger container mt-20">
+                    { error }
+                </div>
+            }
         </div>
     )
 };

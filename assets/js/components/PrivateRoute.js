@@ -11,7 +11,7 @@ export default ({component: Component, ...rest}) => {
                 user && user.displayName ? (
                     <Component {...props} />
                 ) : (
-                    <Redirect to="/login"/>
+                    <Redirect to="/"/>
                 )
             }
         />

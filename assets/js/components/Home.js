@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import {useLocalStorage} from "../hooks";
 import AuthFrom from "./AuthForm";
@@ -7,26 +7,26 @@ import AuthFrom from "./AuthForm";
 
 const Home = () => {
     const [user, setUser] = useLocalStorage("user" );
+    const [error, setError] = useState(null);
     const history = useHistory();
 
-    const onSignIn = googleUser => {
-        console.log(googleUser.getBasicProfile());
-    };
-
-    const handleSubmit = (e, credentials) => {
-        e.preventDefault();
-
+    const handleSubmit = (credentials) => {
         axios.post("/api/auth/register", credentials)
             .then(res => {
                 setUser(res.data);
                 history.push("/channels")
             })
-            .catch(error => console.log(error.response));
+            .catch(error => setError(error.response.data.message));
     };
 
     return(
         <div className="auth">
-            <AuthFrom from="login" handleSubmit={handleSubmit} />
+            <AuthFrom from="register" handleSubmit={handleSubmit} />
+            {error &&
+                <div className="alert danger container mt-20">
+                    { error }
+                </div>
+            }
         </div>
     )
 };
