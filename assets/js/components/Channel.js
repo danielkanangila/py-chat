@@ -15,7 +15,7 @@ const Channel = () => {
                 .then(res => setChannels(res.data))
                 .catch(error => console.log(error.response));
 
-            axios.get(`/api/channels/${params.name}`)
+            axios.get(`/api/channels/${params.id}`)
                 .then(res => setCurrentChannel(res.data))
                 .catch(error => console.log(error.response));
     }, [ params ]);
@@ -36,7 +36,7 @@ const Channel = () => {
                     <h1 className="title">{currentChannel?.name}</h1>
                 </div>
                 <div className="message-list">
-                    {currentChannel.messages.map(message => <MessageCard {...message} />)}
+                    {currentChannel?.messages.map(message => <MessageCard {...message} />)}
                 </div>
             </div>
         </div>

@@ -5,25 +5,17 @@ import { socket } from "./../libs"
 
 const Channels = () => {
     const [channels, setChannels] = useState([]);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         axios.get("/api/channels")
             .then(res => setChannels(res.data))
             .catch(error => console.log(error.response));
-        socket.on("created_channel", channels => setChannels(channels));
-        socket.on("channel_creation_error", error => setError(error.message));
     }, []);
 
     return (
         <div className="channels container">
-            {error &&
-                <div className="alert danger">
-                    { error }
-                </div>
-            }
             <div className="c-header">
-                <CreateChannel />
+                <CreateChannel updateChannels={setChannels} />
             </div>
             <div className="channels-list">
                 <h2>Channels</h2>
@@ -39,17 +31,30 @@ export const ChannelLink = ({id, name}) => {
     </div>
 };
 
-const CreateChannel = () => {
+const CreateChannel = ({updateChannels}) => {
     const [name, setName] = useState("");
-
+    const [error, setError]= useState(null);
     const handleSubmit = e => {
         e.preventDefault();
-        socket.emit("create_channel", {name});
+        axios.post("/api/channels", { name })
+            .then(res => {
+                setError(null);
+                updateChannels(res.data)
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                setError(error.response.data.message)
+            });
     };
 
     return (
         <form onSubmit={handleSubmit} className="create-channel">
             <div className="field">
+                {error &&
+                    <div className="alert danger">
+                        {error}
+                    </div>
+                }
                 <input
                     type="text"
                     name="name"

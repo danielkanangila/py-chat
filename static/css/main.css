@@ -50,6 +50,7 @@ a {
 }
 
 .container {
+  width: 95%;
   max-width: 750px;
   margin: 0 auto;
 }

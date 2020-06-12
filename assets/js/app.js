@@ -12,7 +12,7 @@ const App = () => {
             <Route exact path="/" component={Home} />
             <Route exact  path="/login" component={Login} />
             <PrivateRoute exact path="/channels" component={Channels} />
-            <PrivateRoute path="/channels/:name" component={Channel} />
+            <PrivateRoute path="/channels/:id" component={Channel} />
         </Switch>
     );
 };
