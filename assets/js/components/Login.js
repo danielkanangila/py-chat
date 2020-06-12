@@ -3,6 +3,7 @@ import {Link, useHistory} from "react-router-dom";
 import axois from "axios";
 import {useLocalStorage} from "../hooks";
 import AuthFrom from "./AuthForm";
+import Logo from "./Logo";
 
 const Login = () => {
     const [user, setUser] = useLocalStorage("user" );
@@ -13,7 +14,7 @@ const Login = () => {
         axois.post("/api/auth/login", { ...data })
             .then(res => {
                 setUser(res.data);
-                history.push("/channels")
+                window.location = "/channels";
             })
             .catch(error => {
                 console.log(error.response);
@@ -23,6 +24,7 @@ const Login = () => {
 
     return(
         <div className="auth">
+            <Logo/>
             <AuthFrom from="login" handleSubmit={handleSubmit} />
             {error &&
                 <div className="alert danger container mt-20">

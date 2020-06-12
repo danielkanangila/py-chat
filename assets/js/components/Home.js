@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import {useLocalStorage} from "../hooks";
 import AuthFrom from "./AuthForm";
+import Logo from "./Logo";
 
 
 const Home = () => {
@@ -21,6 +22,7 @@ const Home = () => {
 
     return(
         <div className="auth">
+            <Logo/>
             <AuthFrom from="register" handleSubmit={handleSubmit} />
             {error &&
                 <div className="alert danger container mt-20">
