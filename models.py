@@ -4,7 +4,9 @@ from utils import *
 
 
 class Model:
-    store = []
+
+    def __init__(self):
+        self.store = []
 
     def find_all(self):
         return self.store
@@ -39,6 +41,8 @@ class Model:
 
 
 class Users(Model):
+    def __init__(self):
+        super().__init__()
 
     def before_create(self, payload):
         if (not payload) | (not payload["displayName"]):
@@ -49,6 +53,9 @@ class Users(Model):
 
 
 class Channels(Model):
+    def __init__(self):
+        super().__init__()
+
     def before_create(self, payload):
         if (not payload) | (not payload["name"]):
             raise Exception("`name` is required")

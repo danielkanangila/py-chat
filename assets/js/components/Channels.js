@@ -36,6 +36,7 @@ const CreateChannel = ({updateChannels}) => {
     const [error, setError]= useState(null);
     const handleSubmit = e => {
         e.preventDefault();
+        if (!name) setError("`name` is required.");
         axios.post("/api/channels", { name })
             .then(res => {
                 setError(null);

@@ -1,5 +1,6 @@
 def is_exists(store, key, value):
-    item = list(filter(lambda item: (item != None) & (item[key] == value), store))
-    if item:
-        return True
+    if any(key in item for item in store):
+        for i in store:
+          if i[key] == value:
+            return True
     return False

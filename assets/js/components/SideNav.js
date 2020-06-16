@@ -30,7 +30,6 @@ const Wrapper = styled.div`
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
-    z-index: 1000;
     -webkit-box-shadow: 10px 0px 5px -1px rgba(0,0,0,0.26);
     -moz-box-shadow: 10px 0px 5px -1px rgba(0,0,0,0.26);
     box-shadow: 10px 0px 5px -1px rgba(0,0,0,0.26);

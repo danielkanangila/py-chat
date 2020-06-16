@@ -15,7 +15,7 @@ const Home = () => {
         axios.post("/api/auth/register", credentials)
             .then(res => {
                 setUser(res.data);
-                history.push("/channels")
+                window.location = "/channels";
             })
             .catch(error => setError(error.response.data.message));
     };

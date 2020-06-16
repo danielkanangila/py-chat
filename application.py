@@ -64,7 +64,7 @@ def create_app():
             return jsonify(channels.find_all()), 200
         except KeyError:
             print(sys.exc_info())
-            return jsonify({"message": "An error occurred while trying create a new channel"})
+            return jsonify({"message": "An error occurred while trying create a new channel"}), 500
         except Exception as e:
             print(sys.exc_info())
             return jsonify({"message": str(e)}), 500
