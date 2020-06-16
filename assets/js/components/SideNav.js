@@ -1,23 +1,43 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import {useLocalStorage} from "../hooks";
+import axios from "axios";
 
 const closeSideNav = () => {
     document.getElementById("mySidenav").style.width = "0";
 };
 
 const SideNav = () => {
+    const [user, setUser] = useLocalStorage("user", null);
+    const [channels, setChannels] = useState([]);
+
+    useEffect(() =>{
+        axios.get("/api/channels")
+            .then(res => setChannels(res.data))
+            .catch(error => console.log(error.response || error));
+    }, []);
+
     return(
         <Wrapper id="mySidenav" className="sidenav">
+            <div className="profile">
+                <i className="fas fa-user-circle"></i>
+                <h2>{user.displayName}</h2>
+            </div>
             <span onClick={closeSideNav} className="closebtn">&times;</span>
-            {/* <div className="clearfix"></div> */}
-            <SideNavLink to="/buddles">Home</SideNavLink>
+            <div className="sidenav-channels">
+                {channels.map(channel => <SideNavLink key={channel.id} to={`/channels/${channel.id}`}>{channel.name}</SideNavLink>)}
+            </div>
+
         </Wrapper>
     );
 };
 
 const SideNavLink = ({to, children}) => {
-    return <Link onClick={closeSideNav} to={to}>{children}</Link>
+    return <Link className="sidenav-link" onClick={closeSideNav} to={to}>
+        <i className="fab fa-intercom"></i>
+        <span>{children}</span>
+    </Link>
 };
 
 const Wrapper = styled.div`
@@ -37,13 +57,12 @@ const Wrapper = styled.div`
     a {
         padding: 8px 8px 8px 32px;
         text-decoration: none;
-        font-size: 25px;
+        font-size: 1.125rem;
         color: #ffffff;
         display: block;
         transition: ease-in 0.3s;
         &:hover {
-            background-color: #ffffff;
-            color: #212121;
+            background-color: #424242;
         }
     }
     .closebtn {

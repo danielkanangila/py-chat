@@ -75,6 +75,38 @@ a {
 
 .sidenav {
   z-index: 1000;
+
+  &-link {
+    color: #ffffff;
+
+   i, span {
+      color: #f1f1f1;
+    }
+
+    span {
+      padding-left: 15px;
+    }
+  }
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  padding: 20px 32px;
+  border-bottom: 1px solid #424242;
+  margin-bottom: 15px;
+  z-index: 2;
+
+  h2 {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin-left: 15px;
+  }
+
+  i {
+    font-size: 4rem;
+    color: #424242;
+  }
 }
 
 .field {
@@ -99,6 +131,7 @@ a {
     text-transform: uppercase;
     letter-spacing: 2px;
     width: fit-content;
+    z-index: 1 !important;
   }
 
   input:placeholder-shown + label {

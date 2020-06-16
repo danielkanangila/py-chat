@@ -38,7 +38,9 @@ const NavBar = () => {
                                     fill="#fff"></path>
                             </svg>
                         </MenuIcon>
-                        <Logo/>
+                        <NavLink className="logo-link" to="/channels">
+                             <Logo/>
+                        </NavLink>
                         <div className="items-right">
                             <NavLink onClick={logout} activeClassName="active" to="/api/auth/logout">
                                 <i className="fas fa-sign-out-alt"></i>
@@ -78,6 +80,9 @@ const Toolbar = styled.nav`
         }
         i {
             color: #fff;
+        }
+        &.logo-link:hover {
+            background-color: transparent;
         }
     }
     .items {
