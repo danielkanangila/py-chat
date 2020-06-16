@@ -5,7 +5,6 @@ import { ChannelLink } from "./Channels";
 import { useLocalStorage } from "./../hooks";
 
 const Channel = () => {
-    const [channels, setChannels] = useState([]);
     const [currentChannel, setCurrentChannel] = useLocalStorage("channel");
     const [user, setUser] = useLocalStorage("user" );
     const params = useParams();
@@ -22,21 +21,21 @@ const Channel = () => {
 
     return(
         <div className="channel">
-            <div className="side-nav">
-                <div className="profil">
+            <div id={ 'room-' + params.id} className="chat-room">
+                <div className="chat-room--header chat-room--container">
                     <i className="fas fa-user-circle"></i>
-                    <h1 className="title">{user.displayName}</h1>
+                    <h2>{user.displayName}</h2>
                 </div>
-                <div className="channel-list">
-                    {channels.map(channel => <ChannelLink {...channel} key={channel.id} />)}
+                <div className="chat-room--messages chat-room--container">
+
                 </div>
-            </div>
-            <div className="messages">
-                <div className="message-header">
-                    <h1 className="title">{currentChannel?.name}</h1>
-                </div>
-                <div className="message-list">
-                    {currentChannel?.messages.map(message => <MessageCard {...message} />)}
+                <div className="chat-room--textarea-wrapper chat-room--container">
+                    <div className="chat-room--textarea">
+                        <textarea placeholder={`Send message to ${currentChannel?.name}`}></textarea>
+                        <button className="send">
+                            <i className="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,8 +47,9 @@ const MessageCard = ({from, body, created_at}) => {
         <div className="message-card">
             <div className="message-card--header">
                 <i className="fas fa-user-circle"></i>
-                <Link to={`/users/${from}`}>{from}</Link>
+                <Link onClick={e => e.preventDefault()} to={`/users/${from}`}>{from}</Link>
                 <span className="data">{created_at}</span>
+
             </div>
             <p className="message-card--text">{body}</p>
         </div>

@@ -12,7 +12,8 @@ body {
 }
 
 button,
-input {
+input,
+textarea {
   border: none;
   background: none;
   outline: none;
@@ -74,6 +75,7 @@ a {
 }
 
 .sidenav {
+  position: absolute;
   z-index: 1000;
 }
 
@@ -214,7 +216,8 @@ button:hover {
   background-color: #000000;
 }
 
-.channels {
+.channels,
+.channel {
   margin: 85px auto 30px;
 }
 
@@ -272,5 +275,89 @@ button:hover {
 
 .channels-list a:hover {
   background-color: #e3f2fd;
+}
+
+.channel {
+  position: absolute;
+  width: 95%;
+  left: 2.5%;
+  right: 2.5%;
+  max-width: 750px;
+  margin: 100px auto 0;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  z-index: -1;
+}
+
+.chat-room {
+  margin-top: -20px;
+  height: calc(100vh - 135px);
+  position: relative;
+}
+
+.chat-room--container {
+  padding: 15px 25px;
+}
+
+.chat-room--header {
+  display: flex;
+  align-items: center;
+  background-color: #212121;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  box-shadow: 0px -3px 8px -2px rgba(0, 0, 0, 0.75);
+  z-index: inherit;
+}
+
+.chat-room--header h2 {
+  margin-left: 15px;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.chat-room--header i {
+  font-size: 2rem;
+  color: #424242;
+}
+
+.chat-room--textarea-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.chat-room--textarea {
+  position: relative;
+  width: 100%;
+}
+
+.chat-room--textarea textarea {
+  width: 100%;
+  font-size: 100%;
+  padding: 20px;
+  border: 4px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.chat-room--textarea button {
+  position: absolute;
+  background-color: transparent;
+  right: 0;
+}
+
+.chat-room--textarea button i {
+  color: #2196f3;
+  font-size: 35px;
+}
+
+.chat-room--textarea button i:hover {
+  color: #1565c0;
+}
+
+#mySidenav {
+  z-index: 1000;
 }
 

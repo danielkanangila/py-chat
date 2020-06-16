@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import styled from 'styled-components';
 import {useLocalStorage} from "../hooks";
 import axios from "axios";
@@ -34,10 +34,10 @@ const SideNav = () => {
 };
 
 const SideNavLink = ({to, children}) => {
-    return <Link className="sidenav-link" onClick={closeSideNav} to={to}>
+    return <NavLink activeClassName="active" className="sidenav-link" onClick={closeSideNav} to={to}>
         <i className="fab fa-intercom"></i>
         <span>{children}</span>
-    </Link>
+    </NavLink>
 };
 
 const Wrapper = styled.div`
@@ -61,7 +61,7 @@ const Wrapper = styled.div`
         color: #ffffff;
         display: block;
         transition: ease-in 0.3s;
-        &:hover {
+        &:hover, &.active {
             background-color: #424242;
         }
     }

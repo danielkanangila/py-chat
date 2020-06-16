@@ -26,7 +26,7 @@ const Channels = () => {
 };
 
 export const ChannelLink = ({id, name}) => {
-    return <div className="channel">
+    return <div className="channels-list--item">
         <Link to={`/channels/${id}`}>{name}</Link>
     </div>
 };
