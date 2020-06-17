@@ -10,12 +10,15 @@ from flask_socketio import SocketIO, emit
 from utils import *
 from models import *
 from auth import *
+from jsonschema.exceptions import ValidationError
 
 # Loading environment variables from .env file
 load_dotenv(find_dotenv())
 
 
 def create_app():
+    ON_MESSAGE_SENT = "ON_MESSAGE_SENT"
+    ON_MESSAGES_ON_ = "ON_MESSAGES_ON_"
     # variables
     '''
     users variable contain the list of all registered users
@@ -25,16 +28,15 @@ def create_app():
 
     '''
     channels variable contain the list of channels.
-    schema { id: init, name: string } 
+    schema { id: int, name: string } 
     '''
     channels = Channels()
 
     '''
     messages variable contain the list of messages
-    schema {channel_name: string, messages: list}
-    messages item schema {display_name: string, message: string, created_at}
+    schema {id: int, from: User, to: Channel,  message: string, created_at: data}
     '''
-    messages = []
+    messages = Messages()
 
     app = Flask(__name__)
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
@@ -47,9 +49,33 @@ def create_app():
     @app.route("/")
     @app.route("/login")
     @app.route("/channels")
-    @app.route("/channels/<string:message_id>")
-    def index(message_id=None):
+    @app.route("/channels/<string:channel_id>")
+    def index(channel_id=None):
         return render_template("index.html")
+
+    @socketio.on(ON_MESSAGE_SENT)
+    def received(data):
+        try:
+            messages.create(data)
+            msg = messages.find_where("to", data["to"])
+            socketio.emit(f"{ON_MESSAGES_ON_}{data['to']['id']}", msg)
+        except Exception as e:
+            print(sys.exc_info())
+            raise
+
+    @login_required
+    @app.route("/api/channels/<string:channel_id>")
+    def retrieve_channel_by_id(channel_id):
+        try:
+            channel = channels.find_where("id", int(channel_id))
+            msg = messages.find_where("to", channel[0])
+            return jsonify({
+                "channel": channel[0],
+                "messages": msg
+            }), 200
+        except Exception as e:
+            print(sys.exc_info())
+            return jsonify({"message": "An error occurred while trying retrieve channel"}), 500
 
     @login_required
     @app.route("/api/channels")
@@ -75,15 +101,16 @@ def create_app():
             user = users.create(payload=request.json)
             session["user"] = user
             return user, 201
+        except ValidationError as v:
+            return jsonify({"message": v.message}), 400
 
         except Exception as e:
             print(sys.exc_info())
-            return jsonify({"message": str(e)}), 500
+            raise
 
     @app.route("/api/auth/login", methods=["POST"])
     def login():
         try:
-            print(request.json)
             user = users.find_where(key="displayName", value=request.json["displayName"])
             if not user:
                 raise Exception("Invalid credentials")

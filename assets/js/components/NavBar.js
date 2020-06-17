@@ -9,6 +9,7 @@ import axios from "axios";
 
 const NavBar = () => {
     const [user, setUser] = useLocalStorage("user", null);
+    const [channel, setChannel] = useLocalStorage("channel");
 
     const openSidenav = () => {
         document.getElementById("mySidenav").style.width = "350px";
@@ -19,6 +20,7 @@ const NavBar = () => {
         axios.get("/api/auth/logout")
             .then(res => {
                 setUser(null);
+                setChannel(null);
                 window.location = "/";
             })
             .catch(error => console.log(error.response))

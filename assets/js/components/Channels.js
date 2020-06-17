@@ -39,6 +39,7 @@ const CreateChannel = ({updateChannels}) => {
         if (!name) setError("`name` is required.");
         axios.post("/api/channels", { name })
             .then(res => {
+                setName("");
                 setError(null);
                 updateChannels(res.data)
             })
