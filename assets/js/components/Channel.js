@@ -45,8 +45,8 @@ const Channel = () => {
   };
 
   const handleKeyDown = (e) => {
-    if (e.Key == "Enter") {
-      console.log(e.key);
+    if (e.key === "Enter") {
+      handleSubmit();
     }
   };
 
@@ -85,17 +85,17 @@ const Channel = () => {
           )}
         </div>
         <div className="chat-room--textarea-wrapper chat-room--container">
-          <form onSubmit={handleSubmit} className="chat-room--textarea">
+          <div className="chat-room--textarea">
             <textarea
               value={message}
               placeholder={`Send message to ${channelName}`}
               onChange={handleChange}
-              onKeyDown={handleKeyDown}
+              onKeyPress={handleKeyDown}
             ></textarea>
             <button onClick={handleSubmit} className="send">
               <i className="fas fa-paper-plane"></i>
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
