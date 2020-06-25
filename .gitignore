@@ -1,3 +1,6 @@
 .env
 flask_session
 node_modules
+*.pyc
+*.pyo
+__pycache
